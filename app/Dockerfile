@@ -21,7 +21,8 @@ RUN <<-EOF
 	apt-get update
 	apt-get install -y --no-install-recommends \
 		file \
-		git
+		git \
+		make
 	install-php-extensions \
 		@composer \
 		apcu \
