@@ -1,5 +1,5 @@
 # Executables (local)
-DOCKER_COMP = docker compose
+DOCKER_COMP = cd app && docker compose
 
 # Docker containers
 PHP_CONT = $(DOCKER_COMP) exec php
@@ -11,9 +11,9 @@ SYMFONY  = $(PHP) bin/console
 
 # Misc
 .DEFAULT_GOAL = help
-.PHONY        : help build up start down logs sh composer vendor sf cc test
+.PHONY        : help build up start down logs sh bash composer vendor sf cc test hooks
 
-## —— 🎵 🐳 The Symfony Docker Makefile 🐳 🎵 ——————————————————————————————————
+## —— 🎵 🐳 The FF15 Makefile 🐳 🎵 ——————————————————————————————————————————————
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9\./_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
@@ -59,3 +59,8 @@ sf: ## List all Symfony commands or pass the parameter "c=" to run a given comma
 
 cc: c=c:c ## Clear the cache
 cc: sf
+
+## —— Setup 🪝 ————————————————————————————————————————————————————————————————
+hooks: ## Enable project git hooks (gitmoji commit-msg enforcement). Run once per clone.
+	@git config core.hooksPath "$$(git rev-parse --show-toplevel)/.githooks"
+	@echo "Git hooks enabled — see .githooks/README.md"

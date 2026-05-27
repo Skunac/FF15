@@ -21,6 +21,7 @@ The format used here is a lightly extended version of the original
 | [0005](0005-no-api-platform-in-v1.md) | No API Platform in v1 | Accepted |
 | [0006](0006-aggregate-on-write-not-on-read.md) | Aggregate on write, not on read | Accepted |
 | [0007](0007-dont-rehost-data-dragon-images.md) | Link Data Dragon images from Riot's CDN; do not rehost | Accepted |
+| [0008](0008-gitmoji-alias-commit-convention.md) | Gitmoji alias commit convention | Accepted |
 
 ## Conventions
 

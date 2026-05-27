@@ -1,0 +1,35 @@
+#!/bin/sh
+# Enforce the gitmoji-alias commit convention.
+# See docs/ADR/0008-gitmoji-alias-commit-convention.md for rationale.
+# Enable locally with: git config core.hooksPath .githooks
+
+set -eu
+
+msg_file="$1"
+subject=$(sed -n '1p' "$msg_file")
+
+# Allow-list: merges, reverts, and rebase fixup/squash markers.
+case "$subject" in
+    "Merge "*|"Revert "*|"fixup! "*|"squash! "*|"amend! "*)
+        exit 0
+        ;;
+esac
+
+# Accept one or more `:alias:` tokens followed by a space and a message.
+# Keep this pattern in sync with .github/workflows/commit-lint.yaml.
+pattern='^(:[a-z0-9_+-]+:)( :[a-z0-9_+-]+:)* .+'
+
+if printf '%s' "$subject" | grep -Eq "$pattern"; then
+    exit 0
+fi
+
+cat >&2 <<EOF
+Commit message rejected: subject does not match the gitmoji-alias convention.
+
+  Got:      $subject
+  Expected: ":alias: short description" (e.g., ":sparkles: add tier list page")
+
+See https://gitmoji.dev for the alias list, or docs/ADR/0008 for the rationale.
+EOF
+
+exit 1
