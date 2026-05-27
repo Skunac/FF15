@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: docker
-    directory: /
+    directory: /app
     schedule:
       interval: weekly
     commit-message:
@@ -10,7 +10,7 @@ updates:
       default-days: 7
 
   - package-ecosystem: composer
-    directory: /
+    directory: /app
     schedule:
       interval: weekly
     commit-message:
